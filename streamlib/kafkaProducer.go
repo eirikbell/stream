@@ -1,9 +1,8 @@
 package streamlib
 
 type KafkaProducerBuilder interface {
-	Brokers(brokers string) KafkaProducerBuilder
+	Brokers(brokers []string) KafkaProducerBuilder
 	Topic(topic string) KafkaProducerBuilder
-	ConsumerGroup(consumerGroup string) KafkaProducerBuilder
 }
 
 func NewKafkaProducerBuilder() KafkaProducerBuilder {
@@ -11,16 +10,16 @@ func NewKafkaProducerBuilder() KafkaProducerBuilder {
 }
 
 type kafkaProducerBuilder struct {
+	brokers []string
+	topic   string
 }
 
-func (b *kafkaProducerBuilder) Brokers(brokers string) KafkaProducerBuilder {
+func (b *kafkaProducerBuilder) Brokers(brokers []string) KafkaProducerBuilder {
+	b.brokers = brokers
 	return b
 }
 
 func (b *kafkaProducerBuilder) Topic(topic string) KafkaProducerBuilder {
-	return b
-}
-
-func (b *kafkaProducerBuilder) ConsumerGroup(consumerGroup string) KafkaProducerBuilder {
+	b.topic = topic
 	return b
 }
